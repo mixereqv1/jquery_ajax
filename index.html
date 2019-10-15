@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="main.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <title>Document</title>
+
+        <script>
+            // $(document).ready(_ => {
+            //     $('.select__image').change(event => {
+            //         $select = $('.select__image').val()
+            //         $.ajax({
+            //             type: 'get',
+            //             url: 'fruit.php',
+            //             data: {
+            //                 fruit: $select
+            //             },
+            //             success: data => {
+            //                 $('.result__image').attr('src', data);
+            //             }
+            //         })
+            //     })
+            // })
+
+            $(document).ready(_ => {
+                    $.ajax({
+                        type: 'get',
+                        url: 'filter.php',
+                        success: data => {
+                            data = data.split(', ');
+                            for(let i=0; i<data.length; i++) {
+                                $tr = document.createElement('tr');
+                                $td = document.createElement('td');
+                                $td.innerText = data[i];
+                                $tr.append($td);
+                                $('.result').append($tr);
+                            }
+                        }
+                    })
+                $('.search__input').on('keyup', function() {
+                    $value = $(this).val().toLowerCase();
+                    $('.result td').filter(function() {
+                        $(this).toggle($(this).text().toLowerCase().indexOf($value) > -1);
+                    })
+                })
+            })
+        </script>
+    </head>
+    <body>
+
+        <input type="text" class="search__input">
+        <table class="result">
+
+        </table>
+        
+        <!-- <select name="image" class="select__image">
+            <option value="apple">Jabłko</option>
+            <option value="banana">Banan</option>
+            <option value="kiwi">Kiwi</option>
+        </select>
+
+        <br /><br />
+
+        <img src="https://i5.walmartimages.ca/images/Large/094/514/6000200094514.jpg" alt="fruit" class="result__image"> -->
+    </body>
+</html>
